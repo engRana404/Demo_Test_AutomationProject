@@ -12,6 +12,10 @@ public class Waits {
 
     private static final int DEFAULT_TIMEOUT = 10;
 
+    private Waits() {
+        // Prevent instantiation
+    }
+
     public static WebElement waitForElementToBePresent(WebDriver driver, By locator) {
         return new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMEOUT))
                 .until(ExpectedConditions.presenceOfElementLocated(locator));
