@@ -11,4 +11,9 @@ public class BrowserActions {
     public static void openUrl(WebDriver driver, String url) {
         driver.get(url);
     }
+
+    //Get current URL
+    public static String getCurrentUrl(WebDriver driver) {
+        return driver.getCurrentUrl();
+    }
 }
