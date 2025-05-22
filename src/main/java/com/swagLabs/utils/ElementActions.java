@@ -23,4 +23,11 @@ public class ElementActions {
         Scrolling.scrollToElement(driver, locator);
         driver.findElement(locator).click();
     }
+
+    //Get text
+    public static String getText(WebDriver driver, By locator) {
+        Waits.waitForElementToBeVisible(driver, locator);
+        Scrolling.scrollToElement(driver, locator);
+        return driver.findElement(locator).getText();
+    }
 }
