@@ -12,7 +12,7 @@ public class LoginPage {
     //URL
     private final String url = "https://www.saucedemo.com/";
     //Locators
-    private final By username = By.name("username");
+    private final By username = By.name("user-name");
     private final By password = By.name("password");
     private final By loginButton = By.id("login-button");
     private final By errorMessage = By.cssSelector("[data-test=\"error\"]");
@@ -50,7 +50,6 @@ public class LoginPage {
        Assert.assertEquals(BrowserActions.getCurrentUrl(driver), "https://www.saucedemo.com/inventory.html", "Login Successful");
         return this;
     }
-
     public LoginPage assertUnsuccessfulLogin() {
         Assert.assertEquals(getErrorMessage(), "Epic sadface: Username and password do not match any user in this service", "Login Unsuccessful");
         return this;
