@@ -1,7 +1,9 @@
 package com.swagLabs.pages;
 
 import com.swagLabs.utils.BrowserActions;
+import com.swagLabs.utils.CustomSoftAssertions;
 import com.swagLabs.utils.ElementActions;
+import com.swagLabs.utils.Validations;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -9,8 +11,11 @@ import org.testng.Assert;
 
 public class LoginPage {
     private final WebDriver driver;
-    //URL
+
     private final String url = "https://www.saucedemo.com/";
+    private final String successfulUrl = "https://www.saucedemo.com/inventory.html";
+    private final String title = "Swag Labs";
+
     //Locators
     private final By username = By.name("user-name");
     private final By password = By.name("password");
@@ -46,8 +51,24 @@ public class LoginPage {
     }
 
     //Validations
+    public LoginPage assertLoginPageURL() {
+        CustomSoftAssertions.softAssertions.assertEquals(BrowserActions.getCurrentUrl(driver), successfulUrl, "URL does not match");
+        return this;
+    }
+
+    public LoginPage assertLoginPageTitle() {
+        CustomSoftAssertions.softAssertions.assertEquals(BrowserActions.getPageTitle(driver), title, "Title does not match");
+        return this;
+    }
+
+    public LoginPage assertSuccessfulLoginSoftAssertions() {
+        assertLoginPageURL()
+                .assertLoginPageTitle();
+        return this;
+    }
+
     public LoginPage assertSuccessfulLogin() {
-       Assert.assertEquals(BrowserActions.getCurrentUrl(driver), "https://www.saucedemo.com/inventory.html", "Login Successful");
+        Validations.validatePageURL(driver, successfulUrl);
         return this;
     }
     public LoginPage assertUnsuccessfulLogin() {
