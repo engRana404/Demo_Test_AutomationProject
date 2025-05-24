@@ -1,5 +1,6 @@
 package com.swagLabs.utils;
 
+import io.qameta.allure.Step;
 import org.testng.asserts.SoftAssert;
 
 public class CustomSoftAssertions extends SoftAssert {

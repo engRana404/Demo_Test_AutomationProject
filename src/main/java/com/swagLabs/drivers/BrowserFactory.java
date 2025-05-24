@@ -1,5 +1,6 @@
 package com.swagLabs.drivers;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,16 +17,20 @@ public class BrowserFactory {
 
     private static void addCommonArguments(ChromeOptions options) {
         options.addArguments("start-maximized", "disable-infobars", "--disable-extensions", "--disable-notifications", "--remote-allow-origins=*");
+        //options.addArguments("--headless");
     }
 
     private static void addCommonArguments(FirefoxOptions options) {
         options.setAcceptInsecureCerts(true);
+        //firefoxOptions.addArguments("--headless");
     }
 
     private static void addCommonArguments(EdgeOptions options) {
         options.addArguments("start-maximized", "disable-infobars", "--disable-extensions", "--disable-notifications", "--remote-allow-origins=*");
+        //edgeOptions.addArguments("--headless");
     }
 
+    @Step("Create driver instance for browser: {browserType}")
     public static WebDriver getBrowser(BrowserType browserType) {
         WebDriver driver = null;
         switch (browserType) {
@@ -38,7 +43,6 @@ public class BrowserFactory {
                     "autofill.profile_enabled", false);
                 options.setExperimentalOption("prefs", prefs);
                 options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-                //options.addArguments("--headless");
                 driver = new ChromeDriver(options);
                 break;
             case FIREFOX:
@@ -46,7 +50,6 @@ public class BrowserFactory {
                 addCommonArguments(firefoxOptions);
                 firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
                 firefoxOptions.setAcceptInsecureCerts(true);
-                //firefoxOptions.addArguments("--headless");
                 driver = new FirefoxDriver(firefoxOptions);
                 break;
             case EDGE:
@@ -58,7 +61,6 @@ public class BrowserFactory {
                         "autofill.profile_enabled", false);
                 edgeOptions.setExperimentalOption("prefs", edgePrefs);
                 edgeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-                //edgeOptions.addArguments("--headless");
                 driver = new EdgeDriver(edgeOptions);
                 break;
             default:

@@ -5,14 +5,20 @@ import com.swagLabs.drivers.DriverManger;
 import com.swagLabs.pages.LoginPage;
 
 import com.swagLabs.utils.BrowserActions;
+import com.swagLabs.utils.FilesUtils;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+
+import java.io.File;
 
 public class LoginTest {
     private final String url = "https://www.saucedemo.com/";
     private final String username = "standard_user";
     private final String password = "secret_sauce";
+
+    File allureResultsDir = new File("test-outputs/allure-results");
 
     //Tests
     @Test
@@ -21,6 +27,11 @@ public class LoginTest {
                 .enterPassword(password)
                 .clickLoginButton()
                 .assertSuccessfulLogin();
+    }
+
+    @BeforeSuite
+    public void beforeSuite() {
+        FilesUtils.deleteFiles(allureResultsDir);
     }
 
     //Configurations

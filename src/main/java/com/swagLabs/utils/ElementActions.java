@@ -1,6 +1,7 @@
 package com.swagLabs.utils;
 
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,6 +12,7 @@ public class ElementActions {
     }
 
     //sendKeys
+    @Step("Enter data: {text} in element: {locator}")
     public static void sendKeys(WebDriver driver, By locator, String text) {
         Waits.waitForElementToBeVisible(driver, locator);
         Scrolling.scrollToElement(driver, locator);
@@ -19,6 +21,7 @@ public class ElementActions {
     }
 
     //click
+    @Step("Click on element: {locator}")
     public static void clickElement(WebDriver driver, By locator){
         WebElement element = Waits.waitForElementToBeVisible(driver, locator);
         Scrolling.scrollToElement(driver, locator);
@@ -27,6 +30,7 @@ public class ElementActions {
     }
 
     //Get text
+    @Step("Get text from element: {locator}")
     public static String getText(WebDriver driver, By locator) {
         Waits.waitForElementToBeVisible(driver, locator);
         Scrolling.scrollToElement(driver, locator);
