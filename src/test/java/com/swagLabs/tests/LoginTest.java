@@ -23,7 +23,7 @@ public class LoginTest {
         new LoginPage(driver).enterUsername(username)
                 .enterPassword(password)
                 .clickLoginButton()
-                .assertSuccessfulLoginSoftAssertions();
+                .assertSuccessfulLogin();
     }
 
     //Configurations
@@ -38,7 +38,6 @@ public class LoginTest {
     @AfterMethod
     public void tearDown() {
         driver.quit();
-        CustomSoftAssertions.customAssertAll();
     }
 
 
