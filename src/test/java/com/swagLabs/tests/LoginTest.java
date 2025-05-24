@@ -1,5 +1,7 @@
 package com.swagLabs.tests;
 
+import com.swagLabs.drivers.BrowserFactory;
+import com.swagLabs.drivers.DriverManger;
 import com.swagLabs.pages.LoginPage;
 import com.swagLabs.utils.CustomSoftAssertions;
 import org.openqa.selenium.WebDriver;
@@ -29,9 +31,7 @@ public class LoginTest {
     //Configurations
     @BeforeMethod
     public void setup() {
-        EdgeOptions edgeOptions = new EdgeOptions();
-        edgeOptions.addArguments("start-maximized");
-        driver = new EdgeDriver(edgeOptions);
+        driver = DriverManger.createInstance(BrowserFactory.BrowserType.FIREFOX);
         new LoginPage(driver).navigateToLoginPage(url);
     }
 
@@ -39,6 +39,4 @@ public class LoginTest {
     public void tearDown() {
         driver.quit();
     }
-
-
 }
