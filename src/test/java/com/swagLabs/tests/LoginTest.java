@@ -3,11 +3,8 @@ package com.swagLabs.tests;
 import com.swagLabs.drivers.BrowserFactory;
 import com.swagLabs.drivers.DriverManger;
 import com.swagLabs.pages.LoginPage;
-import com.swagLabs.utils.CustomSoftAssertions;
-import org.openqa.selenium.WebDriver;
 
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
+import com.swagLabs.utils.BrowserActions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -35,6 +32,6 @@ public class LoginTest {
 
     @AfterMethod
     public void tearDown() {
-        DriverManger.getDriver().quit();
+        BrowserActions.closeBrowser(DriverManger.getDriver());
     }
 }
