@@ -13,8 +13,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class LoginTest {
-    //Variable
-    private WebDriver driver;
     private final String url = "https://www.saucedemo.com/";
     private final String username = "standard_user";
     private final String password = "secret_sauce";
@@ -22,7 +20,7 @@ public class LoginTest {
     //Tests
     @Test
     public void successfulLogin() {
-        new LoginPage(driver).enterUsername(username)
+        new LoginPage(DriverManger.getDriver()).enterUsername(username)
                 .enterPassword(password)
                 .clickLoginButton()
                 .assertSuccessfulLogin();
@@ -31,12 +29,12 @@ public class LoginTest {
     //Configurations
     @BeforeMethod
     public void setup() {
-        driver = DriverManger.createInstance(BrowserFactory.BrowserType.FIREFOX);
-        new LoginPage(driver).navigateToLoginPage(url);
+        DriverManger.createInstance(BrowserFactory.BrowserType.FIREFOX);
+        new LoginPage(DriverManger.getDriver()).navigateToLoginPage(url);
     }
 
     @AfterMethod
     public void tearDown() {
-        driver.quit();
+        DriverManger.getDriver().quit();
     }
 }
