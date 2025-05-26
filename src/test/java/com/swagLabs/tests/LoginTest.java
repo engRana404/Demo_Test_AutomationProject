@@ -4,12 +4,11 @@ import com.swagLabs.drivers.BrowserFactory;
 import com.swagLabs.drivers.DriverManger;
 import com.swagLabs.pages.LoginPage;
 
+import com.swagLabs.utils.AllureUtils;
 import com.swagLabs.utils.BrowserActions;
 import com.swagLabs.utils.FilesUtils;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
+import com.swagLabs.utils.ScreenshotsUtils;
+import org.testng.annotations.*;
 
 import java.io.File;
 
@@ -19,6 +18,7 @@ public class LoginTest {
     private final String password = "secret_sauce";
 
     File allureResultsDir = new File("test-outputs/allure-results");
+    File LogsDir = new File("test-outputs/Logs");
 
     //Tests
     @Test
@@ -27,11 +27,13 @@ public class LoginTest {
                 .enterPassword(password)
                 .clickLoginButton()
                 .assertSuccessfulLogin();
+        ScreenshotsUtils.takeScreenshot("successfulLogin");
     }
 
     @BeforeSuite
     public void beforeSuite() {
         FilesUtils.deleteFiles(allureResultsDir);
+        FilesUtils.deleteFiles(LogsDir);
     }
 
     //Configurations
@@ -44,5 +46,10 @@ public class LoginTest {
     @AfterMethod
     public void tearDown() {
         BrowserActions.closeBrowser(DriverManger.getDriver());
+    }
+
+    @AfterClass
+    public void afterClass() {
+        AllureUtils.attachLogsToAllureReport();
     }
 }

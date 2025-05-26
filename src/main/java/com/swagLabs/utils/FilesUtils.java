@@ -10,6 +10,22 @@ public class FilesUtils {
         super();
     }
 
+    public static File getLatestFileFromDir(String dirPath) {
+        File dir = new File(dirPath);
+        File[] filesList = dir.listFiles();
+        if (filesList == null || filesList.length == 0) {
+            LogsUtil.warn("No files found in directory: " + dirPath);
+            return null;
+        }
+        File latestFile = filesList[0];
+        for (File file : filesList) {
+            if (file.lastModified() > latestFile.lastModified()) {
+                latestFile = file;
+            }
+        }
+        return latestFile;
+    }
+
     public static void deleteFiles(File dirPath) {
         if (dirPath == null || !dirPath.exists()) {
             LogsUtil.warn("Directory does not exist: " + dirPath);
@@ -30,6 +46,19 @@ public class FilesUtils {
                     LogsUtil.error("Failed to delete file: " + file);
                 }
             }
+        }
+    }
+
+    public static void copyFile(File source, File destination) {
+        if (source == null || !source.exists()) {
+            LogsUtil.warn("Source file does not exist: " + source);
+            return;
+        }
+        try {
+            Files.copy(source.toPath(), destination.toPath());
+            LogsUtil.info("Copied file from " + source + " to " + destination);
+        } catch (IOException e) {
+            LogsUtil.error("Failed to copy file: " + e.getMessage());
         }
     }
 }
