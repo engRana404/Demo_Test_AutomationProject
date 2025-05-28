@@ -7,7 +7,6 @@ import java.nio.file.Files;
 public class FilesUtils {
     private FilesUtils() {
         // Prevent instantiation
-        super();
     }
 
     public static File getLatestFileFromDir(String dirPath) {
@@ -43,9 +42,16 @@ public class FilesUtils {
                 try {
                     Files.delete(file.toPath());
                 } catch (IOException e) {
-                    LogsUtil.error("Failed to delete file: " + file);
+                    LogsUtil.error("Failed to delete file: " + file + " - " + e.getMessage());
                 }
             }
+        }
+        // Attempt to delete the directory itself after its contents are deleted
+        try {
+            Files.delete(dirPath.toPath());
+        } catch (IOException e) {
+            // It's fine if the root directory is not deleted (e.g., test-outputs/Logs)
+            LogsUtil.warn("Could not delete directory: " + dirPath + " - " + e.getMessage());
         }
     }
 

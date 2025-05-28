@@ -1,9 +1,6 @@
 package com.swagLabs.pages;
 
-import com.swagLabs.utils.BrowserActions;
-import com.swagLabs.utils.CustomSoftAssertions;
-import com.swagLabs.utils.ElementActions;
-import com.swagLabs.utils.Validations;
+import com.swagLabs.utils.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,10 +9,9 @@ import org.testng.Assert;
 
 public class LoginPage {
     private final WebDriver driver;
-
-    private final String url = "https://www.saucedemo.com/";
-    private final String successfulUrl = "https://www.saucedemo.com/inventory.html";
-    private final String title = "Swag Labs";
+    String url = PropertiesUtils.getPropertyValue("baseUrl");
+    String successfulUrl = PropertiesUtils.getPropertyValue("successfulUrl");
+    String title = PropertiesUtils.getPropertyValue("appTitle");
 
     //Locators
     private final By username = By.name("user-name");

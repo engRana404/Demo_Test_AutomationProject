@@ -1,5 +1,6 @@
 package com.swagLabs.drivers;
 
+import com.swagLabs.utils.PropertiesUtils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
@@ -13,7 +14,9 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import java.util.Map;
 
 public class BrowserFactory {
-    public enum BrowserType { CHROME, FIREFOX, EDGE }
+    private BrowserFactory() {
+        super();
+    }
 
     private static void addCommonArguments(ChromeOptions options) {
         options.addArguments("start-maximized", "disable-infobars", "--disable-extensions", "--disable-notifications", "--remote-allow-origins=*");
@@ -31,10 +34,10 @@ public class BrowserFactory {
     }
 
     @Step("Create driver instance for browser: {browserType}")
-    public static WebDriver getBrowser(BrowserType browserType) {
+    public static WebDriver getBrowser(String browserType) {
         WebDriver driver = null;
         switch (browserType) {
-            case CHROME:
+            case "CHROME":
                 ChromeOptions options = new ChromeOptions();
                 addCommonArguments(options);
                 Map<String, Object> prefs = Map.of("profile.default_content_setting_values.notifications", 2,
@@ -45,14 +48,14 @@ public class BrowserFactory {
                 options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
                 driver = new ChromeDriver(options);
                 break;
-            case FIREFOX:
+            case "FIREFOX":
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 addCommonArguments(firefoxOptions);
                 firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
                 firefoxOptions.setAcceptInsecureCerts(true);
                 driver = new FirefoxDriver(firefoxOptions);
                 break;
-            case EDGE:
+            case "EDGE":
                 EdgeOptions edgeOptions = new EdgeOptions();
                 addCommonArguments(edgeOptions);
                 Map<String, Object> edgePrefs = Map.of("profile.default_content_setting_values.notifications", 2,

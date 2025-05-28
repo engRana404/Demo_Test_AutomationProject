@@ -26,7 +26,7 @@ public class Validations {
     public static void validationNotEquals(Object actual, Object expected, String message) {
         Assert.assertNotEquals(actual, expected, message);
     }
-    @Step("Validate actual: {actual} contains expected: {expected} with message: {message}")
+    @Step("Validate the URL of the page is: {expectedUrl}")
     public static void validatePageURL(WebDriver driver, String expectedUrl) {
         Assert.assertEquals(BrowserActions.getCurrentUrl(driver), expectedUrl, "URL does not match");
     }
