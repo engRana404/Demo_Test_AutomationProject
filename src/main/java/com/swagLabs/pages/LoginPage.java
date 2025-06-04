@@ -24,8 +24,8 @@ public class LoginPage {
     }
 
     //Navigation
-    @Step("Navigate to login page: {url}")
-    public void navigateToLoginPage(String url) {
+    @Step("Navigate to login page")
+    public void navigateToLoginPage() {
         BrowserActions.openUrl(driver, this.url);
     }
 

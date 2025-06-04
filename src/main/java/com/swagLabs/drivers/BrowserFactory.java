@@ -20,17 +20,23 @@ public class BrowserFactory {
 
     private static void addCommonArguments(ChromeOptions options) {
         options.addArguments("start-maximized", "disable-infobars", "--disable-extensions", "--disable-notifications", "--remote-allow-origins=*");
-        //options.addArguments("--headless");
+        if(!PropertiesUtils.getPropertyValue("executionType").equalsIgnoreCase("Local")){
+            options.addArguments("--headless");
+        }
     }
 
     private static void addCommonArguments(FirefoxOptions options) {
         options.setAcceptInsecureCerts(true);
-        //firefoxOptions.addArguments("--headless");
+        if(!PropertiesUtils.getPropertyValue("executionType").equalsIgnoreCase("Local")){
+            options.addArguments("--headless");
+        }
     }
 
     private static void addCommonArguments(EdgeOptions options) {
         options.addArguments("start-maximized", "disable-infobars", "--disable-extensions", "--disable-notifications", "--remote-allow-origins=*");
-        //edgeOptions.addArguments("--headless");
+        if(!PropertiesUtils.getPropertyValue("executionType").equalsIgnoreCase("Local")){
+            options.addArguments("--headless");
+        }
     }
 
     @Step("Create driver instance for browser: {browserType}")

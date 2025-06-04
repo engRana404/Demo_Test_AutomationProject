@@ -12,12 +12,13 @@ import java.io.File;
 public class LoginTest {
     File allureResultsDir = new File("test-outputs/allure-results");
     File LogsDir = new File("test-outputs/Logs");
+    JsonUtils testData;
 
     //Tests
     @Test
     public void successfulLogin() {
-        new LoginPage(DriverManger.getDriver()).enterUsername(PropertiesUtils.getPropertyValue("username"))
-                .enterPassword(PropertiesUtils.getPropertyValue("password"))
+        new LoginPage(DriverManger.getDriver()).enterUsername(testData.getJsonData("login-credentials.username"))
+                .enterPassword(testData.getJsonData("login-credentials.password"))
                 .clickLoginButton()
                 .assertSuccessfulLogin();
         ScreenshotsUtils.takeScreenshot("successfulLogin");
@@ -31,12 +32,13 @@ public class LoginTest {
         org.apache.logging.log4j.LogManager.shutdown();
         FilesUtils.deleteFiles(allureResultsDir);
         FilesUtils.deleteFiles(LogsDir);
+        testData = new JsonUtils("test-data");
     }
 
     @BeforeMethod
     public void setup() {
         DriverManger.createInstance();
-        new LoginPage(DriverManger.getDriver()).navigateToLoginPage(PropertiesUtils.getPropertyValue("baseUrl"));
+        new LoginPage(DriverManger.getDriver()).navigateToLoginPage();
     }
 
     @AfterMethod
