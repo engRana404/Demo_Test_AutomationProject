@@ -1,5 +1,7 @@
 package com.swagLabs.utils;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -65,6 +67,26 @@ public class FilesUtils {
             LogsUtil.info("Copied file from " + source + " to " + destination);
         } catch (IOException e) {
             LogsUtil.error("Failed to copy file: " + e.getMessage());
+        }
+    }
+
+    public static void cleanDirectory(File dir) {
+        if (dir == null || !dir.exists() || !dir.isDirectory()) {
+            LogsUtil.warn("Invalid directory: " + dir);
+            return;
+        }
+        File[] filesList = dir.listFiles();
+        if (filesList != null) {
+            for (File file : filesList) {
+                try {
+                    FileUtils.cleanDirectory(dir);
+                    LogsUtil.info("Deleted file: " + file);
+                } catch (IOException e) {
+                    LogsUtil.error("Failed to delete file: " + file + " - " + e.getMessage());
+                }
+            }
+        } else {
+            LogsUtil.warn("No files found in directory: " + dir);
         }
     }
 }

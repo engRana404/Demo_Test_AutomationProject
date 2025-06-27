@@ -13,6 +13,28 @@ public class PropertiesUtils {
     public static final String PROPERTIES_FILE_PATH = "src/main/resources";
     private static final Properties properties = new Properties();
 
+    static {
+        try {
+            Collection<File> propertiesFilesList =
+                    FileUtils.listFiles(new File(PROPERTIES_FILE_PATH), new String[]{"properties"}, true);
+
+            if (propertiesFilesList.isEmpty()) {
+                LogsUtil.info("No properties files found in: " + PROPERTIES_FILE_PATH);
+            }
+
+            for (File file : propertiesFilesList) {
+                try (InputStream inputStream = new FileInputStream(file)) {
+                    properties.load(inputStream);
+                    LogsUtil.info("Loaded properties file: " + file.getName());
+                } catch (IOException e) {
+                    LogsUtil.error("Error reading file " + file.getName() + ": " + e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            LogsUtil.error("Failed to load properties: " + e.getMessage());
+        }
+    }
+
     private PropertiesUtils() {
         // Prevent instantiation
     }
@@ -31,28 +53,6 @@ public class PropertiesUtils {
     }
 
     public static Properties loadProperties() {
-        try {
-            Collection<File> propertiesFilesList =
-                    FileUtils.listFiles(new File(PROPERTIES_FILE_PATH), new String[]{"properties"}, true);
-
-            if (propertiesFilesList.isEmpty()) {
-                LogsUtil.info("No properties files found in: " + PROPERTIES_FILE_PATH);
-            }
-
-            for (File file : propertiesFilesList) {
-                try (InputStream inputStream = new FileInputStream(file)) {
-                    properties.load(inputStream);
-                    LogsUtil.info("Loaded properties file: " + file.getName());
-                } catch (IOException e) {
-                    LogsUtil.error("Error reading file " + file.getName() + ": " + e.getMessage());
-                }
-            }
-
-            return properties;
-
-        } catch (Exception e) {
-            LogsUtil.error("Failed to load properties: " + e.getMessage());
-            return null;
-        }
+        return properties;
     }
 }
