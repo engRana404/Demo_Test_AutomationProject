@@ -2,6 +2,7 @@ package com.swagLabs.tests;
 
 import com.swagLabs.drivers.DriverManger;
 import com.swagLabs.listeners.TestNGListeners;
+import com.swagLabs.pages.HomePage;
 import com.swagLabs.pages.LoginPage;
 
 import com.swagLabs.utils.*;
@@ -9,9 +10,18 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 
 @Listeners(TestNGListeners.class)
-public class LoginTest {
+public class E2E {
     JsonUtils testData;
     WebDriver driver;
+
+    //Configurations
+    @BeforeClass
+    public void beforeClass() {
+        testData = new JsonUtils("test-data");
+        driver = DriverManger.createInstance();
+        new LoginPage(driver).navigateToLoginPage();
+    }
+
     //Tests
     @Test
     public void successfulLogin() {
@@ -21,19 +31,13 @@ public class LoginTest {
                 .assertSuccessfulLogin();
     }
 
-    //Configurations
-    @BeforeClass
-    public void beforeClass() {
-        testData = new JsonUtils("test-data");
+    @Test(dependsOnMethods = "successfulLogin")
+    public void AddProductToCart() {
+        new HomePage(driver).AddProductToCart(testData.getJsonData("products.item1.name"));
+
     }
 
-    @BeforeMethod
-    public void setup() {
-        driver = DriverManger.createInstance();
-        new LoginPage(driver).navigateToLoginPage();
-    }
-
-    @AfterMethod
+    @AfterSuite
     public void tearDown() {
         BrowserActions.closeBrowser(driver);
     }
