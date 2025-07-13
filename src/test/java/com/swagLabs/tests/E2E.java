@@ -33,8 +33,10 @@ public class E2E {
 
     @Test(dependsOnMethods = "successfulLogin")
     public void AddProductToCart() {
-        new HomePage(driver).AddProductToCart(testData.getJsonData("products.item1.name"));
-
+        String productName = testData.getJsonData("products.item1.name");
+        new HomePage(driver)
+                .AddProductToCart(testData.getJsonData(productName))
+                .assertSuccessfulAddToCart(testData.getJsonData(productName));
     }
 
     @AfterSuite
