@@ -2,6 +2,7 @@ package com.swagLabs.tests;
 
 import com.swagLabs.drivers.DriverManger;
 import com.swagLabs.listeners.TestNGListeners;
+import com.swagLabs.pages.CartPage;
 import com.swagLabs.pages.HomePage;
 import com.swagLabs.pages.LoginPage;
 
@@ -35,8 +36,18 @@ public class E2E {
     public void AddProductToCart() {
         String productName = testData.getJsonData("products.item1.name");
         new HomePage(driver)
-                .AddProductToCart(testData.getJsonData(productName))
+                .AddProductToCart(productName)
                 .assertSuccessfulAddToCart(testData.getJsonData(productName));
+    }
+
+    @Test(dependsOnMethods = "AddProductToCart")
+    public void navigateToCartAndCheckout() {
+        String productName = testData.getJsonData("products.item1.name");
+        String productPrice = testData.getJsonData("products.item1.price");
+        new CartPage(driver)
+                .clickCartIcon()
+                .assertCartItemDetails(productName, productPrice)
+                .clickCheckoutButton();
     }
 
     @AfterSuite
