@@ -1,12 +1,14 @@
 package com.swagLabs.tests;
 
 import com.swagLabs.drivers.DriverManger;
+import com.swagLabs.listeners.TestNGListeners;
 import com.swagLabs.pages.LoginPage;
 
 import com.swagLabs.utils.*;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 
+@Listeners(TestNGListeners.class)
 public class LoginTest {
     JsonUtils testData;
     WebDriver driver;
@@ -17,7 +19,6 @@ public class LoginTest {
                 .enterPassword(testData.getJsonData("login-credentials.password"))
                 .clickLoginButton()
                 .assertSuccessfulLogin();
-        ScreenshotsUtils.takeScreenshot("successfulLogin");
     }
 
     //Configurations
@@ -35,10 +36,5 @@ public class LoginTest {
     @AfterMethod
     public void tearDown() {
         BrowserActions.closeBrowser(driver);
-    }
-
-    @AfterClass
-    public void afterClass() {
-        AllureUtils.attachLogsToAllureReport();
     }
 }
