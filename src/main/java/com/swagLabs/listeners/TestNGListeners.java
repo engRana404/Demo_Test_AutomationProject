@@ -47,7 +47,14 @@ public class TestNGListeners implements IExecutionListener, ITestNGListener, IIn
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult result) {
         if (method.isTestMethod()) {
-            CustomSoftAssertions.customAssertAll();
+            try {
+                CustomSoftAssertions.customAssertAll();
+            } catch (AssertionError e) {
+                LogsUtil.error("Soft assertions failed: " + e.getMessage());
+                result.setStatus(ITestResult.FAILURE);
+                result.setThrowable(e);
+            }
+
             switch (result.getStatus()) {
                 case ITestResult.SUCCESS:
                     ScreenshotsUtils.takeScreenshot("passed-" + result.getName());

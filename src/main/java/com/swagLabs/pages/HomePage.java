@@ -1,6 +1,7 @@
 package com.swagLabs.pages;
 
 import com.swagLabs.utils.*;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.locators.RelativeLocator;
@@ -20,12 +21,14 @@ public class HomePage {
     }
 
     //Actions
+    @Step("Navigate to Home Page")
     public HomePage navigateToHomePage() {
         LogsUtil.info("Navigating to Home Page: " + this.HomePageURL);
         BrowserActions.openUrl(driver, this.HomePageURL);
         return this;
     }
 
+    @Step("Add product to cart: {productName}")
     public HomePage AddProductToCart(String productName) {
         LogsUtil.info("Adding product to cart: " + productName);
         // Locate the "Add to Cart" button relative to the product name
@@ -35,6 +38,7 @@ public class HomePage {
         return this;
     }
 
+    @Step("Click on cart icon")
     public HomePage clickCartIcon() {
         LogsUtil.info("Clicking on cart icon");
         ElementActions.clickElement(driver, cartIcon);
@@ -42,6 +46,7 @@ public class HomePage {
     }
 
     //validations
+    @Step("Assert successful addition of product to cart")
     public HomePage assertSuccessfulAddToCart(String productName) {
         LogsUtil.info("Asserting successful addition of product to cart: " + productName);
         String badgeText = ElementActions.getText(driver, cartBadge);

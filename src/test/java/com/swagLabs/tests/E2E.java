@@ -44,8 +44,9 @@ public class E2E {
     public void navigateToCartAndCheckout() {
         String productName = testData.getJsonData("products.item1.name");
         String productPrice = testData.getJsonData("products.item1.price");
+        new HomePage(driver)
+                .clickCartIcon();
         new CartPage(driver)
-                .clickCartIcon()
                 .assertCartItemDetails(productName, productPrice)
                 .clickCheckoutButton();
     }
