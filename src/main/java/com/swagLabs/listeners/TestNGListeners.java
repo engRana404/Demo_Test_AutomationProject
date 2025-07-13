@@ -40,14 +40,6 @@ public class TestNGListeners implements IExecutionListener, ITestNGListener, IIn
     @Override
     public void onExecutionFinish() {
         LogsUtil.info("Test execution finished.");
-        try {
-            File targetAllureDir = new File("target/allure-results");
-            FileUtils.copyDirectory(allureResultsDir, targetAllureDir);
-            LogsUtil.info("Allure results copied to target directory: " + targetAllureDir.getPath());
-        } catch (Exception e) {
-            LogsUtil.error("Failed to copy Allure results: " + e.getMessage());
-        }
-
         // Shutdown logging after everything
         org.apache.logging.log4j.LogManager.shutdown();
     }
@@ -55,6 +47,7 @@ public class TestNGListeners implements IExecutionListener, ITestNGListener, IIn
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult result) {
         if (method.isTestMethod()) {
+            CustomSoftAssertions.customAssertAll();
             switch (result.getStatus()) {
                 case ITestResult.SUCCESS:
                     ScreenshotsUtils.takeScreenshot("passed-" + result.getName());
