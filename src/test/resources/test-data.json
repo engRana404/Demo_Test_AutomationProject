@@ -9,21 +9,21 @@
     {
       "id": "1",
       "name": "Sauce Labs Backpack",
-      "price": 29.99,
+      "price": "$29.99",
       "description": "A red backpack with a logo.",
       "image": "/images/sauce-backpack.jpg"
     },
     "item2": {
       "id": "2",
       "name": "Sauce Labs Bike Light",
-      "price": 9.99,
+      "price": "$9.99",
       "description": "A bike light with a logo.",
       "image": "/images/sauce-bike-light.jpg"
     },
     "item3": {
       "id": "3",
       "name": "Sauce Labs Bolt T-Shirt",
-      "price": 15.99,
+      "price": "$15.99",
       "description": "A stylish t-shirt with a logo.",
       "image": "/images/sauce-bolt-t-shirt.jpg"
     }
