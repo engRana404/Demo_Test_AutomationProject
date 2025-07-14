@@ -27,5 +27,11 @@
       "description": "A stylish t-shirt with a logo.",
       "image": "/images/sauce-bolt-t-shirt.jpg"
     }
+  },
+
+  "checkout-details": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "postalCode": "12345"
   }
 }

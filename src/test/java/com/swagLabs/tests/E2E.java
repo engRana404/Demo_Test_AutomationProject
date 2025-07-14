@@ -4,6 +4,7 @@ import com.swagLabs.drivers.DriverManger;
 import com.swagLabs.listeners.TestNGListeners;
 import com.swagLabs.pages.CartPage;
 import com.swagLabs.pages.HomePage;
+import com.swagLabs.pages.InfoPage;
 import com.swagLabs.pages.LoginPage;
 
 import com.swagLabs.utils.*;
@@ -49,6 +50,17 @@ public class E2E {
         new CartPage(driver)
                 .assertCartItemDetails(productName, productPrice)
                 .clickCheckoutButton();
+    }
+
+    @Test(dependsOnMethods = "navigateToCartAndCheckout")
+    public void fillCheckoutDetails() {
+        String firstName = testData.getJsonData("checkout-details.firstName");
+        String lastName = testData.getJsonData("checkout-details.lastName");
+        String postalCode = testData.getJsonData("checkout-details.postalCode");
+        new InfoPage(driver)
+                .fillInfoForm(firstName, lastName, postalCode)
+                .assertInformationForm(firstName, lastName, postalCode)
+                .clickContinueButton();
     }
 
     @AfterSuite
