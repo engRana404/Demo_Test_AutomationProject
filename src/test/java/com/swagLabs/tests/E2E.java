@@ -2,10 +2,7 @@ package com.swagLabs.tests;
 
 import com.swagLabs.drivers.DriverManger;
 import com.swagLabs.listeners.TestNGListeners;
-import com.swagLabs.pages.CartPage;
-import com.swagLabs.pages.HomePage;
-import com.swagLabs.pages.InfoPage;
-import com.swagLabs.pages.LoginPage;
+import com.swagLabs.pages.*;
 
 import com.swagLabs.utils.*;
 import org.openqa.selenium.WebDriver;
@@ -61,6 +58,18 @@ public class E2E {
                 .fillInfoForm(firstName, lastName, postalCode)
                 .assertInformationForm(firstName, lastName, postalCode)
                 .clickContinueButton();
+    }
+
+    @Test(dependsOnMethods = "fillCheckoutDetails")
+    public void completeCheckout() {
+        String successMessage = testData.getJsonData("checkout-complete.thankYouMessage");
+        new OverviewPage(driver)
+                .navigateToOverviewPage()
+                .clickFinishButton();
+        new CheckoutCompletePage(driver)
+                .navigateToCheckoutCompletePage()
+                .ValidateCheckout(successMessage);
+
     }
 
     @AfterSuite
