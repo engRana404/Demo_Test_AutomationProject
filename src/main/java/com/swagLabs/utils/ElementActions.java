@@ -38,8 +38,19 @@ public class ElementActions {
     }
 
     //Find element
+    @Step("Find element: {locator}")
     public static WebElement findElement(WebDriver driver, By locator) {
         LogsUtil.info("Finding element: " + locator.toString());
         return driver.findElement(locator);
     }
+
+    //Get value
+    @Step("Get value from element: {locator}")
+    public static String getValue(WebDriver driver, By locator) {
+        Waits.waitForElementToBeVisible(driver, locator);
+        Scrolling.scrollToElement(driver, locator);
+        LogsUtil.info("Getting value from element: " + locator.toString());
+        return findElement(driver, locator).getDomAttribute("value");
+    }
+
 }
