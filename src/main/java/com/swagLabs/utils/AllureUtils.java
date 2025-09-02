@@ -8,8 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class AllureUtils {
-    public static final String ALLURE_REPORT_PATH = "test-output/allure-results";
-
     private AllureUtils() {
         // Prevent instantiation
         super();
